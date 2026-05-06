@@ -167,6 +167,7 @@ freeproc(struct proc *p)
   p->name[0] = 0;
   p->chan = 0;
   p->killed = 0;
+  p->trace_mask = 0;
   p->xstate = 0;
   p->state = UNUSED;
 }
@@ -299,6 +300,7 @@ kfork(void)
   release(&wait_lock);
 
   acquire(&np->lock);
+  np->trace_mask = p->trace_mask;
   np->state = RUNNABLE;
   release(&np->lock);
 
